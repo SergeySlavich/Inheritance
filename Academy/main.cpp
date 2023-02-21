@@ -28,7 +28,7 @@ public:
 	}
 	unsigned int get_age()const
 	{
-		time_t t_today = time(NULL);	//Ïîëó÷àåì òåêóùèå äàòó/âðåìÿ â ôîðìàòå Timestamp
+		time_t t_today = time(NULL);
 		//cout << today << endl;
 		tm* tm_today = localtime(&t_today);
 		unsigned int age = tm_today->tm_year - birth_date.tm_year;
@@ -120,7 +120,7 @@ public:
 
 	//						Constructors:
 	Student(HUMAN_TAKE_PARAMETERS, STUDENT_TAKE_PARAMETERS)
-		:Human(HUMAN_GIVE_PARAMETERS)//Âûçîâ êîíñòðóêòîðà áàçîâîãî êëàññà
+		:Human(HUMAN_GIVE_PARAMETERS)
 	{
 		set_speciality(specialty);
 		set_group(group);
@@ -241,7 +241,7 @@ void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef TIME_CHECK
-	time_t t_today = time(NULL);	//Ïîëó÷àåì òåêóùèå äàòó/âðåìÿ â ôîðìàòå Timestamp
+	time_t t_today = time(NULL);
 	cout << t_today << endl;
 	tm* tm_today = localtime(&t_today);
 	cout << tm_today->tm_year + 1900 << "\t";
@@ -266,15 +266,6 @@ void main()
 #endif // INHERITANCE_CHECK
 
 	//Polymorphism
-	/*
-	----------------
-	Ad-Hoc polymorphism
-	----------------
-	1. Pointer to base class
-		(Generalisation - Îáîáùåíèå)
-		Upcast - ïðåîáðàçîâàíèå äî÷åðíåãî îáúåêòà â áàçîâûé òèï.
-	2. Virtual methods;
-	*/
 
 	Human* group[] =
 	{
