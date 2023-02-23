@@ -234,6 +234,12 @@ std::ostream& operator<<(std::ostream & os, const Graduate & obj)
 	return os << (Student&)obj << " " << obj.get_subject();
 }
 
+template<typename T>
+void print(T arr[], const int n)
+{
+
+}
+
 //#define TIME_CHECK
 //#define INHERITANCE_CHECK
 
