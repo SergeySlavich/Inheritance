@@ -6,6 +6,11 @@
 #include<ctime>
 using namespace std;
 
+//TODO:
+//1. Сохранить группу в файл;
+//2. Загрузить группу из файла;
+
+
 #define HUMAN_TAKE_PARAMETERS	const std::string& last_name, const std::string& first_name, int year, int month, int day
 #define HUMAN_GIVE_PARAMETERS	last_name, first_name, year, month, day
 
@@ -33,8 +38,7 @@ public:
 	}
 	unsigned int get_age()const
 	{
-		time_t t_today = time(NULL);	//Ïîëó÷àåì òåêóùèå äàòó/âðåìÿ â ôîðìàòå Timestamp
-		//cout << today << endl;
+		time_t t_today = time(NULL);
 		tm* tm_today = localtime(&t_today);
 		unsigned int age = tm_today->tm_year - birth_date.tm_year;
 		if (tm_today->tm_mon < birth_date.tm_mon)age--;
@@ -62,12 +66,8 @@ public:
 		set_last_name(last_name);
 		set_first_name(first_name);
 		set_birth_date(year, month, day);
-		cout << "HConstructor:\t" << this << endl;
 	}
-	virtual ~Human()
-	{
-		cout << "HDestructor:\t" << this << endl;
-	}
+	virtual ~Human() {}
 
 	//					Methods:
 	virtual std::ostream& info(std::ostream& os)const
@@ -80,7 +80,6 @@ public:
 		os.width(3);
 		os << get_age();
 		return os;
-		//return os << last_name << " " << first_name << " " << get_age();
 	}
 
 	virtual std::ofstream& info(std::ofstream& ofs)const
@@ -90,12 +89,10 @@ public:
 		ofs << last_name;
 		ofs.width(FIRST_NAME_WIDTH);
 		ofs << first_name;
-		//ofs.width(12);
 		ofs << birth_date.tm_year + 1900 << '.';
 		ofs << birth_date.tm_mon << '.';
 		ofs << birth_date.tm_mday << '\t';
 		return ofs;
-		//return os << last_name << " " << first_name << " " << get_age();
 	}
 
 	virtual std::ifstream& scan(std::ifstream& ifs)
@@ -172,7 +169,6 @@ public:
 		set_group(group);
 		set_rating(rating);
 		set_attendance(attendance);
-		cout << "SConstructor:\t" << this << endl;
 	}
 	Student
 	(
@@ -184,12 +180,8 @@ public:
 		set_group(group);
 		set_rating(rating);
 		set_attendance(attendance);
-		cout << "SConstructor:\t" << this << endl;
 	}
-	~Student()
-	{
-		cout << "SDestructor:\t" << this << endl;
-	}
+	~Student() {}
 	std::ostream& info(std::ostream& os)const override
 	{
 		Human::info(os);
@@ -203,7 +195,6 @@ public:
 		os.width(GROUP_WIDTH);
 		os << attendance;
 		return os;
-		//return Human::info(os) << " " << specialty << " " << group << " " << rating << " " << attendance;
 	}
 	std::ifstream& scan(std::ifstream& ifs) override
 	{
@@ -232,7 +223,6 @@ public:
 		ofs.width(GROUP_WIDTH);
 		ofs << attendance;
 		return ofs;
-		//return Human::info(os) << " " << specialty << " " << group << " " << rating << " " << attendance;
 	}
 };
 
@@ -265,12 +255,8 @@ public:
 	{
 		set_specialty(specialty);
 		set_experience(experience);
-		cout << "TConstructor:\t" << this << endl;
 	}
-	~Teacher()
-	{
-		cout << "TDestructor:\t" << this << endl;
-	}
+	~Teacher() {}
 	std::ostream& info(std::ostream& os)const override
 	{
 		Human::info(os);
@@ -280,7 +266,6 @@ public:
 		os.width(EXPERIENCE_WIDTH);
 		os << experience;
 		return os;
-		//return Human::info(os) << " " << specialty << " " << experience << " лет.";
 	}
 	std::ifstream& scan(std::ifstream& ifs) override
 	{
@@ -301,7 +286,6 @@ public:
 		ofs.width(8);
 		ofs << experience;
 		return ofs;
-		//return Human::info(os) << " " << specialty << " " << experience << " лет.";
 	}
 };
 
@@ -321,12 +305,8 @@ public:
 		:Student(HUMAN_GIVE_PARAMETERS, STUDENT_GIVE_PARAMETERS)
 	{
 		set_subject(subject);
-		cout << "GConstructor:\t" << this << endl;
 	}
-	~Graduate()
-	{
-		cout << "GDestructor:\t" << this << endl;
-	}
+	~Graduate() {}
 	std::ostream& info(std::ostream& os)const override
 	{
 		return Student::info(os) << " " << subject;
@@ -348,7 +328,6 @@ template<typename T> void print(T group[], const int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		//group[i]->info();
 		cout << *group[i] << endl;
 		cout << "\n--------------------------------------------\n";
 	}
@@ -415,49 +394,9 @@ Human** load(int& n, const char* filename)
 	return group;
 }
 
-//#define TIME_CHECK
-//#define INHERITANCE_CHECK
-//#define POLIMORPHISM_CHECK
-
 void main()
 {
 	setlocale(LC_ALL, "Russian");
-#ifdef TIME_CHECK
-	time_t t_today = time(NULL);	//Получаем текущие дату/время в формате Timestamp
-	cout << t_today << endl;
-	tm* tm_today = localtime(&t_today);
-	cout << tm_today->tm_year + 1900 << "\t";
-	cout << tm_today->tm_mon + 1 << "\t";
-	cout << tm_today->tm_mday << "\n";
-	cout << asctime(tm_today) << endl;
-#endif // TIME_CHECK
-
-#ifdef INHERITANCE_CHECK
-	Human human("Тупенко", "Василий", 1990, 04, 01);
-	human.info();
-
-	//Student student("Тупенко", "Василий", 1990, 04, 01, "IT", "start", 60, 30);
-	Student student(human, "IT", "start", 60, 30);
-	student.info();
-
-	Teacher teacher("Einstein", "Albert", 1879, 03, 14, "Atronomy", 120);
-	teacher.info();
-
-	Graduate graduate("Abignale", "Frank", 1920, 01, 02, "Artist", "Criminal", 98, 11, "Foregry documents");
-	graduate.info();
-#endif // INHERITANCE_CHECK
-
-	//Polymorphism
-#ifdef POLIMORPHISM_CHECK
-	/*
-	----------------
-	Ad-Hoc polymorphism
-	----------------
-	1. Pointer to base class
-		(Generalisation - Îáîáùåíèå)
-		Upcast - ïðåîáðàçîâàíèå äî÷åðíåãî îáúåêòà â áàçîâûé òèï.
-	2. Virtual methods;
-	*/
 
 	Human* group[] =
 	{
@@ -468,14 +407,7 @@ void main()
 		new Teacher("Diaz", "Ricardo", 1960, 03,03, "Weapons distribution", 20)
 	};
 
-	char filename[] = "group.txt";
-	/*for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
-	{
-		//group[i]->info();
-		cout << *group[i] << endl;
-		fout << *group[i] << endl;
-		cout << "\n--------------------------------------------\n";
-	}*/
+	char filename[] = "new_group.txt";
 	
 	print(group, sizeof(group) / sizeof(group[0]));
 	save(group, sizeof(group) / sizeof(group[0]), filename);
@@ -487,9 +419,8 @@ void main()
 	char sz_command[_MAX_FNAME] = "notepad ";
 	strcat_s(sz_command, _MAX_FNAME, filename);
 	system(sz_command);
-#endif
 
 	int n = 0;
-	Human** group = load(n, "group.txt");
-	print(group, n);
+	Human** load_group = load(n, filename);
+	print(load_group, n);
 }
