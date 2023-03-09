@@ -7,9 +7,8 @@
 using namespace std;
 
 //TODO:
-//1. Сохранить группу в файл;
-//2. Загрузить группу из файла;
-
+//Перегрузить констуктор класса Student таким образом,
+//чтобы студента можно было создать из уже существующего человека.
 
 #define HUMAN_TAKE_PARAMETERS	const std::string& last_name, const std::string& first_name, int year, int month, int day
 #define HUMAN_GIVE_PARAMETERS	last_name, first_name, year, month, day
@@ -170,6 +169,8 @@ public:
 		set_rating(rating);
 		set_attendance(attendance);
 	}
+	//TODO:
+	//Перегрузить конструктор класса Student таким образом, чтобы студента можно было создать из уже существующего человека.
 	Student
 	(
 		const Human& human,
@@ -419,6 +420,7 @@ void main()
 	char sz_command[_MAX_FNAME] = "notepad ";
 	strcat_s(sz_command, _MAX_FNAME, filename);
 	system(sz_command);
+
 
 	int n = 0;
 	Human** load_group = load(n, filename);
